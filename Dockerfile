@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Heroku provides $PORT; make sure your app binds to it
-ENV PORT=${PORT:-8081}
+ENV PORT=${PORT:-8080}
 
 # Launch your web process
 ENTRYPOINT ["python3"]
