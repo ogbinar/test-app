@@ -1,2 +1,2 @@
-build: python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt 
-web: . .venv/bin/activate && python3 app.py
+build: python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+web:   . .venv/bin/activate && python3 app.py
