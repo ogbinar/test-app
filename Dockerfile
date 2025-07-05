@@ -1,19 +1,22 @@
-FROM python:3.11
+# Start from a lightweight Python image
+FROM python:3.11-alpine⁠
 
-LABEL author="Myk"
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
+# Set work directory
 WORKDIR /app
 
 # Install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy the rest of your app’s source
+# Copy app files
 COPY . .
 
-# Heroku provides $PORT; make sure your app binds to it
-ENV PORT=${PORT:-8080}
+# Expose the port Heroku will bind to
+EXPOSE $PORT
 
-# Launch your web process
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+# Use gunicorn as the entrypoint (Heroku sets $PORT)
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
